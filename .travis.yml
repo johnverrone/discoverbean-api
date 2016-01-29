@@ -8,3 +8,5 @@ node_js:
   - "iojs"
 services:
   - mongodb
+before_script:
+  - mongo discoverbean;
