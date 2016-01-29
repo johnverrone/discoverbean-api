@@ -9,4 +9,4 @@ node_js:
 services:
   - mongodb
 before_script:
-  - mongo discoverbean;
+  - mongo discoverbean --eval 'db.accounts.find();'
