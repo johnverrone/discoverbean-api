@@ -1,0 +1,23 @@
+{
+  "name": "discoverbean-api",
+  "version": "0.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha -R spec"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.13.1",
+    "mongodb": "^2.1.4",
+    "mongoose": "^4.3.7",
+    "morgan": "~1.6.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "really-need": "^1.9.0",
+    "supertest": "^1.1.0"
+  }
+}
