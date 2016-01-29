@@ -16,6 +16,10 @@ exports.newAccount = function(req, res) {
 
     newAccount.save(function(err) {
         if (err) {
+            if (err.code === 11000) {
+                res.status(400).send('username is taken');
+                return;
+            }
             throw err;
         }
 
@@ -23,15 +27,14 @@ exports.newAccount = function(req, res) {
         res.sendStatus(200);
         db.disconnect();
     });
-
 }
 
 exports.manualLogin = function(req, res) {
 
     var db = mongoose.connect(dbConfig.url);
 
-    var userQuery = req.query.username;
-    var passQuery = req.query.password;
+    var userQuery = req.body['username'];
+    var passQuery = req.body['password'];
 
     Account.findOne({username: userQuery}, function(err, account) {
         if (err) {
@@ -43,6 +46,9 @@ exports.manualLogin = function(req, res) {
         } else {
             validatePassword(passQuery, account.password, function(valid) {
                 if (valid) {
+                    req.session.account = account;
+                    res.cookie('username', account.username, { maxAge: 900000 });
+					res.cookie('password', account.password, { maxAge: 900000 });
                     res.status(200).json(account);
                 } else {
                     res.status(401).send('unauthorized request');

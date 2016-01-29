@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var accountSchema = new Schema({
-    name: String,
-    email: String,
-    username: String,
-    password: String,
+    name: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    username: { type: String, unique: true, required: true },
+    password: { type: String, unique: true, required: true },
     admin: Boolean
 });
 

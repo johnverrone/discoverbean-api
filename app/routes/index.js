@@ -1,5 +1,5 @@
 var router = require('express').Router();
 
-router.use('/account', require('./account.routes'));
+router.use('/', require('./account.routes'));
 
 module.exports = router;
