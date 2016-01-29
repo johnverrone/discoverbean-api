@@ -1,6 +1,7 @@
 var Account = require('../models/account');
 var mongoose = require('mongoose');
 var dbConfig = require('../../config/db');
+var crypto = require('crypto');
 
 exports.newAccount = function(req, res) {
 
@@ -10,7 +11,7 @@ exports.newAccount = function(req, res) {
         name: req.body['name'],
         email: req.body['email'],
         username: req.body['username'],
-        password: req.body['password'],
+        password: sha256(req.body['password']),
         admin: true
     });
 
@@ -23,7 +24,7 @@ exports.newAccount = function(req, res) {
             throw err;
         }
 
-        console.log('Account created!');
+        console.log(req.body['username'] + ' created!');
         res.sendStatus(200);
         db.disconnect();
     });
@@ -48,7 +49,7 @@ exports.manualLogin = function(req, res) {
                 if (valid) {
                     req.session.account = account;
                     res.cookie('username', account.username, { maxAge: 900000 });
-					res.cookie('password', account.password, { maxAge: 900000 });
+					res.cookie('password', sha256(account.password), { maxAge: 900000 });
                     res.status(200).json(account);
                 } else {
                     res.status(401).send('unauthorized request');
@@ -59,6 +60,43 @@ exports.manualLogin = function(req, res) {
     });
 }
 
+exports.deleteAccount = function(req, res) {
+
+    var db = mongoose.connect(dbConfig.url);
+
+    var userQuery = req.body['username'];
+
+    Account.findOneAndRemove({username: userQuery}, function (err) {
+        if (err) {
+            throw err;
+        }
+
+        console.log(userQuery + ' removed!');
+        res.sendStatus(200);
+        db.disconnect();
+    });
+}
+
+exports.getAccountInfo = function (req, res) {
+    if (req.session.account == null) {
+        res.status(400).send('no account found');
+    } else {
+        res.status(200).send(req.session.account.username);
+    }
+}
+
+exports.logout = function(req, res) {
+    res.clearCookie('username');
+    res.clearCookie('password');
+    req.session.destroy(function(e) { res.sendStatus(200); });
+}
+
+
+var sha256 = function(str) {
+    return crypto.createHash('sha256').update(str).digest('hex');
+}
+
 var validatePassword = function (plainPass, encryptedPass, callback) {
-    callback(plainPass === encryptedPass);
+    var validHash = sha256(plainPass);
+    callback(validHash === encryptedPass);
 }
