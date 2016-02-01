@@ -27,6 +27,9 @@ var port = process.env.PORT || 8080;
 
 app.use('/api', require('./app/routes'));
 
+// set static directory
+app.use(express.static(path.join(__dirname, 'public/dist')));
+
 var server = app.listen(port);
 console.log('API is served on ' + port);
 
