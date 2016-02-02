@@ -54,7 +54,7 @@ update action model =
             , Effects.none
             )
         Login ->
-            ( model, postLogin2 model )
+            ( model, postLogin model )
         LoginResponse result ->
             ( model, Effects.none )
 
@@ -102,8 +102,8 @@ view address model =
 
 -- EFFECTS
 
-postLogin2 : Model -> Effects Action
-postLogin2 model =
+postLogin : Model -> Effects Action
+postLogin model =
     loginRequest "api/login" model
         |> Task.toMaybe
         |> Task.map LoginResponse
@@ -117,10 +117,6 @@ loginRequest url model =
         , url = url
         , body = encodeBody model
         }
-
--- postLogin : Model -> Effects Action
--- postLogin model =
---     Effects.task (Task.map LoginResponse (Task.onError (Http.post decodeLoginResponse "api/login" (encodeBody model)) (\err -> Task.succeed (Account False "" "" ""))))
 
 encodeBody : Model -> Http.Body
 encodeBody model =
