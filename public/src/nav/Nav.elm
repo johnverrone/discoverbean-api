@@ -32,7 +32,7 @@ view =
                 [ href "#"
                 , class "brand-logo header"
                 ]
-                [ text "Dicoverbean" ]
+                [ text "Discoverbean" ]
             , ul
                 [ id "nav-mobile"
                 , class "right hide-on-med-and-down"
