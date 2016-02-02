@@ -37,7 +37,7 @@ exports.manualLogin = function(req, res) {
     var userQuery = req.body['username'];
     var passQuery = req.body['password'];
 
-    console.log('LOGIN ATTEMPT: ' + req.body['username']);
+    console.log(req.body);
 
     Account.findOne({username: userQuery}, function(err, account) {
         if (err) {

@@ -1,7 +1,8 @@
 import Effects exposing (Never)
-import Login exposing (init, update, view)
 import StartApp exposing (start)
 import Task
+
+import Login exposing (init, update, view)
 
 app =
     start
