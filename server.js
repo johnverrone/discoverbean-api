@@ -23,6 +23,15 @@ app.use(session({
 	})
 );
 
+function restrict(req, res, next) {
+    if (req.session.account) {
+        next();
+    } else {
+        req.session.error = 'Access denied!';
+        res.redirect('/login');
+    }
+}
+
 var port = process.env.PORT || 8080;
 
 app.use('/api', require('./app/routes'));
@@ -31,6 +40,6 @@ app.use('/api', require('./app/routes'));
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
 var server = app.listen(port);
-console.log('API is served on ' + port);
+console.log(`listening on port ${port}.`);
 
 module.exports = server;

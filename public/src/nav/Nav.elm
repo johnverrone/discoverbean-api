@@ -37,7 +37,7 @@ view =
                 [ id "nav-mobile"
                 , class "right hide-on-med-and-down"
                 ]
-                [ li [] [ a [ href "#loginModal" ] [ text "Login" ] ]
+                [ li [] [ a [ href "#loginModal" ] [ text "Login John" ] ]
                 ]
             ]
         ]
