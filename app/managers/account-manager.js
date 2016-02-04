@@ -2,6 +2,7 @@ var Account = require('../models/account');
 var mongoose = require('mongoose');
 var dbConfig = require('../../config/db');
 var crypto = require('crypto');
+var bcrypt = require('bcryptjs');
 
 exports.newAccount = function(req, res) {
 
