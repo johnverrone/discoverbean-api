@@ -5,11 +5,11 @@ Node, Express, MongoDB backend for Discoverbean
 
 ## API
 
-/api/login
-/api/logout
-/api/signup
-/api/account
-/api/deleteAccount
+/api/login <br/>
+/api/logout <br/>
+/api/signup <br/>
+/api/account <br/>
+/api/deleteAccount <br/>
 
 ## Installation
 TODO: Describe the installation process
