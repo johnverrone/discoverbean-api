@@ -31,8 +31,6 @@ exports.newAccount = function(req, res) {
     });
 }
 
-// test
-
 exports.manualLogin = function(req, res) {
 
     var db = mongoose.connect(dbConfig.url);
