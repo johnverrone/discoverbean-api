@@ -8,7 +8,7 @@ import Html.Attributes exposing (action, class, disabled, id, hidden, href, plac
 import Html.Events exposing (on, onClick, onSubmit, targetValue)
 import String exposing (isEmpty)
 
-view : Address Action -> Model -> Html
+view : Signal.Address Action -> Model -> Html
 view address model =
     let
         loginForm =
@@ -19,7 +19,7 @@ view address model =
                 ]
 
                 -- Form title
-                [ h2 [] [ text "Please login" ]
+                [ h2 [ class "header center-align" ] [ text "Login Fam" ]
                 , div
                     [ class "input-group" ]
                     [ span
@@ -29,11 +29,10 @@ view address model =
                             [ type' "text"
                             , class "form-control"
                             , placeholder "Name"
-                            , value model.loginForm.name
+                            , value model.loginForm.username
                             , on "input" targetValue (Signal.message address << Pages.Login.Update.UpdateUsername)
                             , size 40
                             , required True
-                            , disabled (isFetchStatus)
                             ]
                             []
                    ]
@@ -47,11 +46,10 @@ view address model =
                       [ type' "password"
                       , class "form-control"
                       , placeholder "Password"
-                      , value modelForm.pass
+                      , value model.loginForm.password
                       , on "input" targetValue (Signal.message address << Pages.Login.Update.UpdatePassword)
                       , size 40
                       , required True
-                      , disabled (isFetchStatus)
                       ]
                       []
                    ]
@@ -59,21 +57,20 @@ view address model =
                 -- Submit button
                 , button
                     [ onClick address Pages.Login.Update.SubmitForm
-                    , class "btn btn-lg btn-primary btn-block"
-                    , disabled (isFetchStatus || isFormEmpty)
+                    , class "btn waves-effect waves-light deep-orange right"
+                    , type' "submit"
                     ]
-                    [ span [ hidden <| not isFetchStatus] [ spinner ]
-                    , span [ hidden isFetchStatus ] [ text "Login" ] ]
+                    [ text "Login"
+                    , i [ class "material-icons right" ] [ text "send" ]
                     ]
-    in
-        div [ id "login-page" ] [
-          hr [] []
-          , div
-              [ class "container" ]
-              [ div
-                  [ class "wrapper" ]
-                  [ loginForm
-                  ]
                 ]
-                , hr [] []
-              ]
+    in
+        div [ id "login-page" ]
+            [ div
+                [ class "container" ]
+                [ div
+                    [ class "wrapper" ]
+                    [ loginForm
+                    ]
+                ]
+            ]

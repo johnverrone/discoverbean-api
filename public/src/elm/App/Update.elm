@@ -13,11 +13,24 @@ import Pages.Login.Update exposing (Action)
 
 type alias Model = App.Model
 
+initialEffects : List (Effects Action)
+initialEffects =
+    []
+
+init : (Model, Effects Action)
+init =
+  ( App.initialModel
+  , Effects.batch initialEffects
+  )
+
 type Action
     = NoOp
+    | ChildLoginAction Pages.Login.Update.Action
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
     case action of
         NoOp ->
+            ( model, Effects.none )
+        ChildLoginAction act ->
             ( model, Effects.none )

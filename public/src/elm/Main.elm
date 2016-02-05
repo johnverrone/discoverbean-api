@@ -19,4 +19,4 @@ main =
 
 port tasks : Signal (Task.Task Never ())
 port tasks =
-  app.tasks
+    app.tasks

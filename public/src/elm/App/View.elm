@@ -29,30 +29,32 @@ mainContent address model =
       let
         childAddress =
             Signal.forwardTo address App.Update.ChildLoginAction
-        context =
-            { backendConfig = (.config >> .backendConfig) model }
       in
-        div [ style myStyle ] [ Pages.Login.View.view context childAddress model.login ]
+        div [] [ Pages.Login.View.view childAddress model.login ]
 
 
 
 navbar : Signal.Address Action -> Model -> Html
 navbar address model =
-    div [] []
+    nav [ class "deep-orange" ]
+        [ div [ class "nav-wrapper container" ]
+            [ a
+                [ href "#"
+                , class "brand-logo header"
+                ]
+                [ text "Discoverbean" ]
+            , ul
+                [ id "nav-mobile"
+                , class "right hide-on-med-and-down"
+                ]
+                [ li [] [ a [ href "#loginModal" ] [ text "Login John" ] ]
+                ]
+            ]
+        ]
 
 
 footer : Html
 footer =
-  div [class "main-footer"]
-    [ div [class "container"]
-      [ span []
-        [ text "With "
-        , i [ class "fa fa-heart" ] []
-        , text " from "
-        , a [ href "http://gizra.com", target "_blank", class "gizra-logo" ] [text "gizra"]
-        , span [ class "divider" ] [text "|"]
-        , text "Fork me on "
-        , a [href "https://github.com/Gizra/elm-hedley", target "_blank"] [text "Github"]
+    div []
+        [
         ]
-      ]
-  ]
