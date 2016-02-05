@@ -37,7 +37,7 @@ var port = process.env.PORT || 8080;
 app.use('/api', require('./app/routes'));
 
 // set static directory
-app.use(express.static(path.join(__dirname, 'public/dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 var server = app.listen(port);
 console.log(`listening on port ${port}.`);
